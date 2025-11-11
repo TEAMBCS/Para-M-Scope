@@ -6,6 +6,8 @@
   🚀 Powered by <b> BANGLADESH CYBER SQUAD</b><br>
   📆 Year: 2025
 </p>
+---
+
 # Para-M-Scope
 
 **Next-Generation Parameter Mapping & Discovery Engine**
@@ -34,13 +36,23 @@ Para-M-Scope (Parameter Mapping Scope) is an asynchronous parameter discovery to
 # Update package lists and install Python if needed (Termux example)
 pkg update -y
 pkg install python -y
-
-pip install 
+pkg install python3 -y
+pkg install git -y
+git clone https://github.com/TEAMBCS/Para-M-Scope.git
+cd Para-M-Scope
+chmod +x *
+chmod 777 *
+pip install -r para-m-scope.txt
+python3 para-m-scope.py --help
 ```
 
 ---
 
 ## Usage
+*For show Menu*
+```bash
+python3 para-m-scope.py --help
+```
 
 ```bash
 python .py https://example.com --depth 2 --domain-only --output results.json

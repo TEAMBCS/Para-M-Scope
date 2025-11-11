@@ -123,16 +123,16 @@ A table displays: index, URL, parameter names, and a quick suspicious indicator.
 
 ## 🖼️ MENU PIC
 <p align="center">
-  <img src="https://i.postimg.cc/WpBMzqJ0/tool-menu.jpg" alt="pic" width="45%" />
+  <img src="https://i.postimg.cc/kGJFJkH2/TOOL-MENU.jpg" alt="pic" width="45%" />
 </p>
 
 ---
 
 ## 🖼️ DEMO PIC
 <p align="center">
-  <img src="https://i.postimg.cc/Znpvpjy6/tool-demo1.jpg" alt="pic" width="45%" />
+  <img src="https://i.postimg.cc/NfP7tC7d/TOOL-DEMO1.jpg" alt="pic" width="45%" />
   &nbsp;&nbsp;
-  <img src="https://i.postimg.cc/X7KyvHWb/tool-demo2.jpg" alt="pic1" width="45%" />
+  <img src="https://i.postimg.cc/tgFhhqQR/TOOL-DEMO2.jpg" alt="pic1" width="45%" />
 </p>
 
 ---

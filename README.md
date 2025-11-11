@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.postimg.cc/FsXNGsQT/Para-M-Scope.jpg" width="380" alt="FIRE-EYE Logo">
+  <img src="https://i.postimg.cc/0yp6ZH3K/Para-M-Scope.png" width="380" alt="Para-M-Scope Logo">
 </p>
 
 <p align="center">

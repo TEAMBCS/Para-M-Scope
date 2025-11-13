@@ -193,8 +193,7 @@ python3 para-m-scope.py https://target.example --output /path/to/results.json
   Increase FD limit and reduce concurrency:
 
   ```bash
-  ulimit -n 4096
-  python3 para-m-scope.py.py ... --concurrency 6
+  python3 para-m-scope.py ... --concurrency 6
   ```
 
 * Slow network / timeouts

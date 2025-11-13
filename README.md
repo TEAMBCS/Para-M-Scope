@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  ⚙️ Built with ❤️ by <b>BLACK ZERO </b><br>
-  🚀 Powered by <b> BANGLADESH CYBER SQUAD</b><br>
+  ⚙️ Built with ❤️ by **BLACK ZERO**<br>  
+  🚀 Powered by **BANGLADESH CYBER SQUAD**  <br>
   📆 Year: 2025
 </p>
 
@@ -18,24 +18,12 @@ Para-M-Scope (Parameter Mapping Scope) is an asynchronous parameter discovery to
 
 ---
 
-## Features
-
-* Asynchronous scanning using `aiohttp` for high-speed requests.
-* Smart link extraction (anchors, forms, scripts, images, link tags, and areas).
-* Domain-limited crawling option to stay inside the target domain.
-* Multi-level logging system with distinct formats for `info`, `debug`, `crawl`, `fetch`, and `params`.
-* Clean date–time formatted log output for every log line.
-* Suspicious parameter detector for quick XSS/SQL-like pattern hints.
-* Rich table output for readable command-line results.
-* JSON export with a timestamped report.
-* Controls for crawl depth, concurrency, timeout, and maximum pages.
-
----
-
-## Installation
+## Install requirements and run:
 
 ```bash
 pkg update -y
+pkg install libxml2 -y
+pkg install libxslt -y
 pkg install python -y
 pkg install python3 -y
 pkg install git -y
@@ -49,17 +37,66 @@ python3 para-m-scope.py --help
 
 ---
 
-## Usage
-*For show Menu*
+## Features
+
+* Async crawling using `aiohttp` for high-speed requests.
+* Smart link extraction from anchors, forms, scripts, images, link tags and areas.
+* Domain-limited crawling option to stay inside the target domain.
+* Multi-level logging (info, debug, crawl, fetch, params) with a clean datetime format.
+* Suspicious parameter detector for quick XSS / SQL-like pattern hints.
+* **New**: Parameter analysis features:
+
+  * Parameter fuzzing (small payloads) to detect errors / anomalies.
+  * Reflected parameter detection (potential reflected XSS).
+  * Common vulnerability keyword detection (SQL/parsing error keywords).
+* Rich table output and optional JSON export.
+* Controls for depth, concurrency, timeout, and max pages.
+
+---
+
+## New: Fuzzing & Analysis — what it does
+
+Para-M-Scope now includes lightweight analysis for each discovered parameterized URL:
+
+* **Parameter fuzzing**
+  Appends small payloads (`'`, `"`, `<`, `>`, `--`) to parameter values and requests the modified URL. Checks for:
+
+  * Error keywords in the response body (common SQL/parse errors).
+  * Significant response length changes (heuristic for unexpected output).
+  * Redirects / changed final URL.
+
+* **Reflected detection**
+  Checks whether a parameter value is present in the response body (possible reflected XSS indicator).
+
+* **Common vulnerability keywords check**
+  Scans responses for terms like `mysql`, `syntax error`, `sqlstate`, `unexpected token`, `pdoexception`, etc. If found, the tool logs a `SUSPECT` note.
+
+Logs produced include:
+
+* `PARA-REFLECT` — parameter value reflected in response.
+* `FUZZ-ERR` — fuzzed request produced error-keywords in response.
+* `FUZZ-LEN` — fuzzed request produced significant length change (>30% by default).
+* `SUSPECT` — base response already contains error keywords.
+
+> Analysis runs asynchronously and non-blocking, so the crawler proceeds while analysis tasks run in background.
+
+---
+
+## Usage & Options
+
+Show help:
+
 ```bash
 python3 para-m-scope.py --help
 ```
 
+Example:
+
 ```bash
-python para-m-scope.py https://example.com --depth 2 --domain-only --output results.json
+python3 para-m-scope.py https://example.com --depth 2 --domain-only --concurrency 10 --timeout 20 --max-pages 100 --output results.json
 ```
 
-### Common options
+**Common options**
 
 | Flag            | Description                                        |
 | --------------- | -------------------------------------------------- |
@@ -73,29 +110,43 @@ python para-m-scope.py https://example.com --depth 2 --domain-only --output resu
 
 ---
 
-## Output examples
+## Output
 
-### Logger entry example
+### Logger example
 
 ```
 [2025-01-01]-[19:22:10] [INFO]  | [SCOPING] depth=1 -> https://example.com
-[2025-01-01]-[19:22:11] [INFO]  | [PARAMS] https://example.com/?id=10 -> ['id']
+[2025-01-01]-[19:22:11] [INFO]  | [PARA-MS] https://example.com/?id=10 -> ['id']
+[2025-01-01]-[19:22:12] [INFO]  | [PARA-REFLECT] ➤ [params] https://example.com/?id=10 :: param 'id' appears reflected in response
+[2025-01-01]-[19:22:14] [INFO]  | [FUZZ-ERR] ➤ [fetch] https://example.com/?id=10' -> keywords ['mysql']
 ```
 
 ### Table result
 
-A table displays: index, URL, parameter names, and a quick suspicious indicator.
+CLI table shows: index, URL, parameter names, and a quick suspicious indicator (reflection/fuzz hints included).
 
-### JSON output example
+### JSON output example (schema)
+
+Saved JSON contains `generated_at`, `count`, and `results`. Each result now optionally includes `analysis`:
 
 ```json
 {
   "generated_at": "2025-01-01T19:25:32",
-  "count": 4,
+  "count": 1,
   "results": [
     {
       "url": "https://example.com/?id=10",
-      "params": {"id": ["10"]}
+      "params": {"id": ["10"]},
+      "analysis": {
+        "reflections": {"id": true},
+        "fuzz": {
+          "id": [
+            {"payload": "'", "final_url": "https://...", "errors": ["mysql"], "len_change_pct": 4.5},
+            {"payload": "\"", "final_url": "https://...", "errors": [], "len_change_pct": 0.0}
+          ]
+        },
+        "error_keywords_in_base": []
+      }
     }
   ]
 }
@@ -103,24 +154,134 @@ A table displays: index, URL, parameter names, and a quick suspicious indicator.
 
 ---
 
-## How it works
+## Examples
 
-1. Fetch the initial target page asynchronously.
-2. Parse the page and extract links from common tags.
-3. Normalize links and detect query strings with parameters.
-4. Record parameterized URLs and run simple suspicious-value checks.
-5. Optionally follow discovered links up to the configured depth.
-6. Present results in a table and optionally save as JSON.
+Basic scan:
+
+```bash
+python3 para-m-scope.py https://target.example --depth 2 --concurrency 8
+```
+
+Domain-only scan:
+
+```bash
+python3 para-m-scope.py https://target.example --depth 3 --domain-only --max-pages 100
+```
+
+Save results:
+
+```bash
+python3 para-m-scope.py https://target.example --output /path/to/results.json
+```
 
 ---
 
-## Notes & Ethics
+## Troubleshooting & Tips
 
-* This tool is intended for educational and authorized security testing only. Do not use it to scan or attack sites without explicit permission.
-* Adjust `--max-pages` and `--concurrency` to avoid overloading targets.
+* `bs4.FeatureNotFound: lxml`
+  Install system libs and lxml:
+
+  ```bash
+  pkg install libxml2 libxslt -y
+  pip3 install lxml
+  ```
+
+* `Session is closed` or related aiohttp errors
+  Make sure the script is run normally (`asyncio.run(main())`) and dependencies are current. Use `--debug` to get more logs.
+
+* `Too many open files` (Termux)
+  Increase FD limit and reduce concurrency:
+
+  ```bash
+  ulimit -n 4096
+  python3 para-m-scope.py.py ... --concurrency 6
+  ```
+
+* Slow network / timeouts
+  Increase `--timeout` (e.g., 20 or 30).
 
 ---
 
+## Configuration (optional)
+
+You can optionally add a small JSON config loader (not included by default). Example config file `pmscope.conf`:
+
+```json
+{
+  "concurrency": 10,
+  "timeout": 20,
+  "max_pages": 50,
+  "domain_only": true
+}
+```
+
+If you add `--config file` support, use this template.
+
+---
+
+## Performance tips (Termux)
+
+* Increase file descriptor limit: `ulimit -n 4096`
+* Lower concurrency for unstable networks: `--concurrency 4-8`
+* Use `--max-pages` to limit scope on large sites
+* Run scans from a stable network or via a controlled proxy
+
+---
+
+## Responsible use & legal
+
+**Important:** Only scan systems you own or have explicit permission to test. Misuse can be illegal.
+
+If you discover a vulnerability:
+
+* Do not exploit it.
+* Follow responsible disclosure: contact the site owner/security contact.
+* Provide minimal PoC data required to verify.
+
+
+---
+
+## How to interpret findings (quick guide)
+
+| Indicator      | Meaning / suggested action                                                        |
+| -------------- | --------------------------------------------------------------------------------- |
+| `PARA-REFLECT` | Parameter value appears in response — check manually for XSS                      |
+| `FUZZ-ERR`     | Error keywords found after fuzz — possible SQLi or parser error (verify manually) |
+| `FUZZ-LEN`     | Large length change on fuzz — inspect response for injection output               |
+| `SUSPECT`      | Base response contained error keywords — investigate further                      |
+
+> All findings are heuristics. Manual verification is required before any claim.
+
+---
+
+## Contributing
+
+Contributions welcome. Suggested workflow:
+
+* Fork → create branch → PR
+* Follow PEP8 and keep functions small and testable
+* Add tests for new analysis logic
+* Update `CHANGELOG.md` for any behavior changes
+
+---
+
+## Roadmap
+
+Planned / optional improvements:
+
+* HTML/interactive report (Streamlit or static HTML)
+* Plugin architecture for additional analyzers
+* Rate-limiter + politeness settings (random delays)
+* Web dashboard + API export (webhook/Discord/Telegram)
+
+---
+
+## Changelog (short)
+
+* v1.0 — Initial release (core crawling + param mapping)
+* v1.1 — Added async parameter analysis: fuzzing, reflection, error keyword detection
+
+---
 ## 🖼️ MENU PIC
 <p align="center">
   <img src="https://i.postimg.cc/kGJFJkH2/TOOL-MENU.jpg" alt="pic" width="45%" />
@@ -130,20 +291,14 @@ A table displays: index, URL, parameter names, and a quick suspicious indicator.
 
 ## 🖼️ DEMO PIC
 <p align="center">
-  <img src="https://i.postimg.cc/NfP7tC7d/TOOL-DEMO1.jpg" alt="pic" width="45%" />
+  <img src="https://i.postimg.cc/CMDXCyZz/demo1.jpg" alt="pic" width="45%" />
   &nbsp;&nbsp;
-  <img src="https://i.postimg.cc/tgFhhqQR/TOOL-DEMO2.jpg" alt="pic1" width="45%" />
+  <img src="https://i.postimg.cc/kgjpMqZ7/demo2.jpg" alt="pic1" width="45%" />
 </p>
-
 ---
 
-##  LICENSE-info
+## License
 
-**MIT License**
-
-**Copyright (c) 2025 Bangladesh Cyber Squad**
-
-
+MIT License © 2025 Bangladesh Cyber Squad
 
 ---
-

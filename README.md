@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  ⚙️ Built with ❤️ by **BLACK ZERO**<br>  
-  🚀 Powered by **BANGLADESH CYBER SQUAD**  <br>
+  ⚙️ Built with ❤️ by <b>BLACK ZERO</b><br>  
+  🚀 Powered by <b>BANGLADESH CYBER SQUAD</b><br>
   📆 Year: 2025
 </p>
 

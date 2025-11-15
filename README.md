@@ -298,10 +298,11 @@ Planned / optional improvements:
   <img src="https://i.postimg.cc/FKNWgjrY/demo3.jpg" alt="pic3" width="45%" />
  
   </p>
+
 ---
 
 ## License
 
-MIT License © 2025 Bangladesh Cyber Squad
+*MIT License © 2025 Bangladesh Cyber Squad*
 
 ---

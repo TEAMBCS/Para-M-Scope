@@ -202,22 +202,6 @@ python3 para-m-scope.py https://target.example --output /path/to/results.json
 
 ---
 
-## Configuration (optional)
-
-You can optionally add a small JSON config loader (not included by default). Example config file `pmscope.conf`:
-
-```json
-{
-  "concurrency": 10,
-  "timeout": 20,
-  "max_pages": 50,
-  "domain_only": true
-}
-```
-
-If you add `--config file` support, use this template.
-
----
 
 ## Performance tips (Termux)
 

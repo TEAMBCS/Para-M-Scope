@@ -290,10 +290,13 @@ Planned / optional improvements:
 
 ## 🖼️ DEMO PIC
 <p align="center">
-  <img src="https://i.postimg.cc/CMDXCyZz/demo1.jpg" alt="pic" width="45%" />
+  <img src="https://i.postimg.cc/j2Lkntsm/demo1.jpg" alt="pic1" width="33%" />
   &nbsp;&nbsp;
-  <img src="https://i.postimg.cc/kgjpMqZ7/demo2.jpg" alt="pic1" width="45%" />
-</p>
+  <img src="https://i.postimg.cc/SNYvyS1M/demo2.jpg" alt="pic2" width="33%" />
+  &nbsp;&nbsp;
+  <img src="https://i.postimg.cc/FKNWgjrY/demo3.jpg" alt="pic3" width="35%" />
+ 
+  </p>
 ---
 
 ## License

@@ -36,7 +36,7 @@ pip3 install -r para-m-scope.txt
 python3 para-m-scope.py --help
 ```
 
-#> Easy way 
+# Easy way 
 
 ```bash
 pip install para-m-scope

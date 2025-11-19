@@ -35,6 +35,11 @@ chmod 777 *
 pip3 install -r para-m-scope.txt
 python3 para-m-scope.py --help
 ```
+### Another Way to Install 
+
+```bash
+pip install para-m-scope==1.2.1
+```
 
 
 ---

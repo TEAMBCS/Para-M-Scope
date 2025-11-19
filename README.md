@@ -39,6 +39,7 @@ python3 para-m-scope.py --help
 
 ```bash
 pip install para-m-scope==1.2.1
+para-m-scope -h
 ```
 
 

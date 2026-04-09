@@ -271,6 +271,7 @@ Planned / optional improvements:
 
 * v1.0 — Initial release (core crawling + param mapping)
 * v1.1 — Added async parameter analysis: fuzzing, reflection, error keyword detection
+* v2.0 - Improve performance 
 
 ---
 ## 🖼️ MENU PIC

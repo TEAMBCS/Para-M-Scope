@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.postimg.cc/0yp6ZH3K/Para-M-Scope.png" width="380" alt="Para-M-Scope Logo">
+  <img src="https://raw.githubusercontent.com/TEAMBCS/Para-M-Scope/main/Image/para-m-scope-logo.png" width="380" alt="Para-M-Scope Logo">
 </p>
 
 <p align="center">
@@ -275,18 +275,18 @@ Planned / optional improvements:
 ---
 ## 🖼️ MENU PIC
 <p align="center">
-  <img src="https://i.postimg.cc/kGJFJkH2/TOOL-MENU.jpg" alt="pic" width="50%" />
+  <img src="https://raw.githubusercontent.com/TEAMBCS/Para-M-Scope/main/Image/para-m-scope-ui.jpg" alt="pic" width="50%" />
 </p>
 
 ---
 
 ## 🖼️ DEMO PIC
 <p align="center">
-  <img src="https://i.postimg.cc/j2Lkntsm/demo1.jpg" alt="pic1" width="45%" />
+  <img src="https://raw.githubusercontent.com/TEAMBCS/Para-M-Scope/main/Image/para-m-scope-img3.jpg" alt="pic1" width="45%" />
   &nbsp;&nbsp;
-  <img src="https://i.postimg.cc/SNYvyS1M/demo2.jpg" alt="pic2" width="45%" />
+  <img src="https://raw.githubusercontent.com/TEAMBCS/Para-M-Scope/main/Image/para-m-scope-img2.jpg" alt="pic2" width="45%" />
   &nbsp;&nbsp;
-  <img src="https://i.postimg.cc/FKNWgjrY/demo3.jpg" alt="pic3" width="45%" />
+  <img src="https://raw.githubusercontent.com/TEAMBCS/Para-M-Scope/main/Image/para-m-scope-img1.jpg" alt="pic3" width="45%" />
  
   </p>
 

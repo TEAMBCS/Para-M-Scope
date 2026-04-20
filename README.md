@@ -263,9 +263,10 @@ Planned / optional improvements:
 
 ## Changelog (short)
 
-* v1.0 — Initial release (core crawling + param mapping)
-* v1.1 — Added async parameter analysis: fuzzing, reflection, error keyword detection
-* v2.0 - Improve performance 
+* v1.0.0 — Initial release (core crawling + param mapping)
+* v1.1.0 — Added async parameter analysis: fuzzing, reflection, error keyword detection
+* v2.0.0 - Improve performance
+* v2.0.1 - Bug Fixed 
 
 ---
 ## 🖼️ MENU PIC
